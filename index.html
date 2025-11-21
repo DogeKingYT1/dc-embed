@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Discord Embed Generator</title>
+<title>Embed Link Generator</title>
 <style>
 body { font-family: sans-serif; background: #121212; color: #fff; display: flex; flex-direction: column; align-items: center; padding: 50px; }
 input { margin: 10px; padding: 8px; width: 300px; }
@@ -12,12 +11,11 @@ a { color: #0f0; word-break: break-all; margin-top: 20px; }
 </style>
 </head>
 <body>
-<h1>Discord Embed Link Generator</h1>
+<h1>Discord Embed-Like Link Generator</h1>
 
-<input type="text" id="title" placeholder="Embed Title">
-<input type="text" id="description" placeholder="Embed Description">
-<input type="text" id="author" placeholder="Author Name (optional)">
-<input type="text" id="image" placeholder="Image URL (https://...)">
+<input type="text" id="author" placeholder="Author">
+<input type="text" id="description" placeholder="Description">
+<input type="text" id="image" placeholder="Image URL (optional)">
 <input type="color" id="color" value="#18F900">
 
 <button onclick="generateLink()">Generate Link</button>
@@ -26,13 +24,12 @@ a { color: #0f0; word-break: break-all; margin-top: 20px; }
 
 <script>
 function generateLink() {
-    const title = encodeURIComponent(document.getElementById('title').value);
-    const description = encodeURIComponent(document.getElementById('description').value);
     const author = encodeURIComponent(document.getElementById('author').value);
+    const description = encodeURIComponent(document.getElementById('description').value);
     const image = encodeURIComponent(document.getElementById('image').value);
     const color = encodeURIComponent(document.getElementById('color').value.replace('#',''));
 
-    const link = `${window.location.origin}/api/embed?title=${title}&description=${description}&author=${author}&image=${image}&color=${color}`;
+    const link = `${window.location.origin}/display.html?author=${author}&description=${description}&image=${image}&color=${color}`;
     const a = document.getElementById('generatedLink');
     a.href = link;
     a.innerText = link;

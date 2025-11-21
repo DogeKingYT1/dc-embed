@@ -1,39 +1,43 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Dynamic Embed</title>
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dynamic Embed">
-<meta property="og:description" content="Custom embed!">
+<meta property="og:title" content="">
+<meta property="og:description" content="">
 <meta property="og:image" content="">
+<meta property="og:type" content="website">
 <style>
 body { font-family: sans-serif; text-align: center; padding: 50px; color: #fff; }
+.container { display: inline-block; padding: 20px; border-radius: 8px; background-color: rgba(0,0,0,0.2); max-width: 600px; }
+img { max-width: 90%; margin-top: 20px; border-radius: 6px; }
+h1 { margin: 0; font-size: 2em; }
+p { margin: 10px 0 0 0; }
 </style>
 </head>
 <body>
-<h1 id="title"></h1>
-<h3 id="author"></h3>
-<p id="description"></p>
-<img id="image" src="" alt="" style="max-width:90%; margin-top:20px;">
+<div class="container">
+  <h1 id="author"></h1>
+  <p id="description"></p>
+  <img id="image" src="" alt="">
+</div>
+
 <script>
 const params = new URLSearchParams(window.location.search);
-const title = params.get('title') || 'No Title';
+const author = params.get('author') || 'Unknown';
 const description = params.get('description') || '';
-const author = params.get('author') || '';
 const image = params.get('image') || '';
 const color = params.get('color') || '18F900';
 
-document.title = title;
-document.getElementById('title').innerText = title;
-document.getElementById('description').innerText = description;
 document.getElementById('author').innerText = author;
-document.getElementById('image').src = image;
+document.getElementById('description').innerText = description;
+if(image) document.getElementById('image').src = image;
+
+// Set page background to mimic embed color
 document.body.style.backgroundColor = `#${color}`;
 
-// Update OG meta tags dynamically (Discord preview may cache)
-document.querySelector('meta[property="og:title"]').setAttribute('content', title);
+// Update OG meta tags for Discord preview
+document.querySelector('meta[property="og:title"]').setAttribute('content', author);
 document.querySelector('meta[property="og:description"]').setAttribute('content', description);
 document.querySelector('meta[property="og:image"]').setAttribute('content', image);
 </script>
