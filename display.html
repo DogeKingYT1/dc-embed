@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Dynamic Embed</title>
-<meta property="og:title" content="">
-<meta property="og:description" content="">
-<meta property="og:image" content="">
-<meta property="og:type" content="website">
-<style>
-body { font-family: sans-serif; text-align: center; padding: 50px; color: #fff; }
-.container { display: inline-block; padding: 20px; border-radius: 8px; background-color: rgba(0,0,0,0.2); max-width: 600px; }
-img { max-width: 90%; margin-top: 20px; border-radius: 6px; }
-h1 { margin: 0; font-size: 2em; }
-p { margin: 10px 0 0 0; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed</title>
 </head>
 <body>
-<div class="container">
-  <h1 id="author"></h1>
-  <p id="description"></p>
-  <img id="image" src="" alt="">
-</div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const title = params.get('t');
+        const description = params.get('d');
+        const color = params.get('c');
+        const author = params.get('a');
+        const footer = params.get('f');
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const author = params.get('author') || 'Unknown';
-const description = params.get('description') || '';
-const image = params.get('image') || '';
-const color = params.get('color') || '18F900';
+        if (title) {
+            document.title = title;
+            const metaTitle = document.createElement('meta');
+            metaTitle.setAttribute('property', 'og:title');
+            metaTitle.setAttribute('content', title);
+            document.head.appendChild(metaTitle);
+        }
 
-document.getElementById('author').innerText = author;
-document.getElementById('description').innerText = description;
-if(image) document.getElementById('image').src = image;
+        if (description) {
+            const metaDescription = document.createElement('meta');
+            metaDescription.setAttribute('property', 'og:description');
+            metaDescription.setAttribute('content', description);
+            document.head.appendChild(metaDescription);
+        }
 
-// Set page background to mimic embed color
-document.body.style.backgroundColor = `#${color}`;
+        if (color) {
+            const metaColor = document.createElement('meta');
+            metaColor.setAttribute('name', 'theme-color');
+            metaColor.setAttribute('content', `#${color}`);
+            document.head.appendChild(metaColor);
+        }
+        
+        if (author) {
+            const metaAuthor = document.createElement('meta');
+            metaAuthor.setAttribute('property', 'og:site_name');
+            metaAuthor.setAttribute('content', author);
+            document.head.appendChild(metaAuthor);
+        }
 
-// Update OG meta tags for Discord preview
-document.querySelector('meta[property="og:title"]').setAttribute('content', author);
-document.querySelector('meta[property="og:description"]').setAttribute('content', description);
-document.querySelector('meta[property="og:image"]').setAttribute('content', image);
-</script>
+        // Note: Discord doesn't directly support a footer meta tag. 
+        // It's often part of a more complex embed object which we can't fully replicate with just meta tags.
+        // We can add it to the description.
+        if (footer) {
+             const metaDescription = document.querySelector('meta[property="og:description"]');
+             if(metaDescription) {
+                metaDescription.content += `\n\n${footer}`;
+             }
+        }
+
+    </script>
+    <h1>You can now paste this link in Discord.</h1>
 </body>
 </html>
