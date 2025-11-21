@@ -53,6 +53,14 @@
              }
         }
 
+        const image = params.get('i');
+        if (image) {
+            const metaImage = document.createElement('meta');
+            metaImage.setAttribute('property', 'og:image');
+            metaImage.setAttribute('content', image);
+            document.head.appendChild(metaImage);
+        }
+
     </script>
     <h1>You can now paste this link in Discord.</h1>
 </body>

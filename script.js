@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const colorInput = document.getElementById('color');
     const authorInput = document.getElementById('author');
     const footerInput = document.getElementById('footer');
+    const imageInput = document.getElementById('image');
     const generatedUrlInput = document.getElementById('generated-url');
     const copyButton = document.getElementById('copy-button');
 
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewTitle = document.querySelector('.embed-title');
     const previewDescription = document.querySelector('.embed-description');
     const previewFooter = document.querySelector('.embed-footer');
+    const previewImage = document.querySelector('.embed-image');
 
     function updatePreviewAndURL() {
         const title = titleInput.value;
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const color = colorInput.value;
         const author = authorInput.value;
         const footer = footerInput.value;
+        const image = imageInput.value;
 
         // Update Preview
         previewPill.style.backgroundColor = color;
@@ -26,6 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
         previewTitle.textContent = title;
         previewDescription.textContent = description;
         previewFooter.textContent = footer;
+        if (image) {
+            previewImage.src = image;
+            previewImage.style.display = 'block';
+        } else {
+            previewImage.style.display = 'none';
+        }
 
         // Generate URL
         const params = new URLSearchParams();
@@ -34,12 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (color) params.set('c', color.substring(1)); // remove #
         if (author) params.set('a', author);
         if (footer) params.set('f', footer);
+        if (image) params.set('i', image);
 
         const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '') + 'display.html';
         generatedUrlInput.value = `${baseUrl}?${params.toString()}`;
     }
 
-    [titleInput, descriptionInput, colorInput, authorInput, footerInput].forEach(input => {
+    [titleInput, descriptionInput, colorInput, authorInput, footerInput, imageInput].forEach(input => {
         input.addEventListener('input', updatePreviewAndURL);
     });
 

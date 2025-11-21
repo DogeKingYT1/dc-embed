@@ -1,0 +1,12 @@
+{
+  "name": "dc-embed",
+  "version": "1.0.0",
+  "description": "Discord embed generator",
+  "main": "api/embed.js",
+  "scripts": {
+    "start": "node api/embed.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
