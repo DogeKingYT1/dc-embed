@@ -16,7 +16,7 @@ a { color: #0f0; word-break: break-all; margin-top: 20px; }
 
 <input type="text" id="title" placeholder="Embed Title">
 <input type="text" id="description" placeholder="Embed Description">
-<input type="text" id="author" placeholder="Author Name">
+<input type="text" id="author" placeholder="Author Name (optional)">
 <input type="text" id="image" placeholder="Image URL (https://...)">
 <input type="color" id="color" value="#18F900">
 
@@ -32,7 +32,7 @@ function generateLink() {
     const image = encodeURIComponent(document.getElementById('image').value);
     const color = encodeURIComponent(document.getElementById('color').value.replace('#',''));
 
-    const link = `${window.location.origin}/display.html?title=${title}&description=${description}&author=${author}&image=${image}&color=${color}`;
+    const link = `${window.location.origin}/api/embed?title=${title}&description=${description}&author=${author}&image=${image}&color=${color}`;
     const a = document.getElementById('generatedLink');
     a.href = link;
     a.innerText = link;
